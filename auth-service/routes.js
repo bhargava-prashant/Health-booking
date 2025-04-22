@@ -1,8 +1,10 @@
 import express from 'express';
-const router = express.Router();
+import { register,login,profile } from './controllers/authController.js';
+import { verifyToken } from './middleware/verifyToken.js';
 
-router.get('/', (req, res) => {
-  res.send('Hello from the Auth Service!');
-});
+const router=express.Router();
+router.post('/register', register);
+router.post('/login', login);
+router.get('/profile', verifyToken, profile);
 
 export default router;
