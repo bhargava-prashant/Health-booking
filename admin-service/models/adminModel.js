@@ -2,10 +2,35 @@ import pool from '../db.js';
 import bcrypt from 'bcrypt';
 import validator from 'validator'; // Add this import for email validation
 
-// Fetch all bookings by patient_id
+// Fetch all bookings by patient_id with detailed information
 export const fetchBookingsByPatientId = async (patient_id) => {
-    return await pool.query('SELECT * FROM bookings WHERE patient_id = $1', [patient_id]);
+    try {
+        const result = await pool.query(`
+            SELECT
+                b.booking_id,
+                b.patient_id,
+                b.doctor_id,
+                b.date,
+                b.time,
+                b.status,
+                d.specialty,
+                u.first_name AS doctor_first_name,
+                u.last_name AS doctor_last_name,
+                p.first_name AS patient_first_name,
+                p.last_name AS patient_last_name
+            FROM bookings b
+            JOIN doctors d ON b.doctor_id = d.doctor_id
+            JOIN users u ON d.user_id = u.user_id
+            JOIN users p ON b.patient_id = p.user_id
+            WHERE b.patient_id = $1;
+        `, [patient_id]);
+        
+        return result.rows;  // Return only the rows (bookings data)
+    } catch (err) {
+        throw new Error(`Error fetching bookings for patient ID ${patient_id}: ${err.message}`);
+    }
 };
+
 
 // Fetch all bookings by doctor_id
 export const fetchBookingsByDoctorId = async (doctor_id) => {
@@ -18,6 +43,14 @@ export const removeBooking = async (patient_id, doctor_id, date, time) => {
         'DELETE FROM bookings WHERE patient_id = $1 AND doctor_id = $2 AND date = $3 AND time = $4',
         [patient_id, doctor_id, date, time]
     );
+};
+
+export const fetchUserById = async (user_id) => {
+    return await pool.query('SELECT * FROM doctors WHERE user_id = $1', [user_id]);
+};
+
+export const fetchuserById=async (user_id)=>{
+    return await pool.query('SELECT * FROM users WHERE user_id = $1', [user_id]);
 };
 
 // Register a doctor in the database

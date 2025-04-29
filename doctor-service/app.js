@@ -2,7 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import routes from './routes.js';  // Import routes for booking service
-
+import pool from "./db.js"
 dotenv.config();  // Load environment variables
 
 const app = express();

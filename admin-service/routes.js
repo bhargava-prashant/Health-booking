@@ -6,8 +6,11 @@ import {
   registerDoctor,
   getUsersData,
   getDoctorsData,
-  removeDoctor
+  removeDoctor,
+  getUserById,
+  UserById
 } from './controllers/adminController.js';
+
 
 const router = express.Router();
 
@@ -22,6 +25,10 @@ router.delete('/doctor/:doctor_id', removeDoctor);
 
 // **User Data Routes**
 router.get('/users', getUsersData);
+router.get('/users/:user_id',UserById)
 router.get('/doctors', getDoctorsData);
+
+// **NEW: User By ID Route**
+router.get('/user/:user_id', getUserById);
 
 export default router;

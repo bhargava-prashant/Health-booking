@@ -5,7 +5,9 @@ import {
     registerDoctorInDb,
     fetchAllUsers,
     fetchAllDoctors,
-    removeDoctorFromDb
+    removeDoctorFromDb,
+    fetchUserById,
+    fetchuserById
 } from '../models/adminModel.js';
 
 // Error handling function
@@ -17,12 +19,13 @@ const handleError = (res, error, msg) => {
 export const getBookingsByPatientId = async (req, res) => {
     const { patient_id } = req.params;
     try {
-        const result = await fetchBookingsByPatientId(patient_id);
-        res.status(200).json(result.rows);
+        const result = await fetchBookingsByPatientId(patient_id); // already rows
+        res.status(200).json(result); // send result directly, not result.rows
     } catch (err) {
         handleError(res, err, 'Error fetching bookings by patient ID');
     }
 };
+
 
 // Get bookings by doctor_id
 export const getBookingsByDoctorId = async (req, res) => {
@@ -51,6 +54,42 @@ export const deleteBooking = async (req, res) => {
         res.status(200).json({ msg: 'Booking deleted successfully' });
     } catch (err) {
         handleError(res, err, 'Error deleting booking');
+    }
+};
+
+export const getUserById = async (req, res) => {
+    const { user_id } = req.params;
+
+    if (!user_id) {
+        return res.status(400).json({ msg: 'User ID is required' });
+    }
+
+    try {
+        const result = await fetchUserById(user_id);
+        if (result.rowCount === 0) {
+            return res.status(404).json({ msg: 'User not found' });
+        }
+        res.status(200).json(result.rows[0]);
+    } catch (err) {
+        handleError(res, err, 'Error fetching user by ID');
+    }
+};
+
+export const UserById = async (req, res) => {
+    const { user_id } = req.params;
+
+    if (!user_id) {
+        return res.status(400).json({ msg: 'User ID is required' });
+    }
+
+    try {
+        const result = await fetchuserById(user_id);
+        if (result.rowCount === 0) {
+            return res.status(404).json({ msg: 'User not found' });
+        }
+        res.status(200).json(result.rows[0]);
+    } catch (err) {
+        handleError(res, err, 'Error fetching user by ID');
     }
 };
 

@@ -2,17 +2,19 @@ version: '3.8'
 
 services:
   client:
-    build: ./client
+    build:
+      context: ./client
+      dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "3000:80"  # Serve on port 3000 externally, maps to Nginx inside
     depends_on:
       - auth-service
       - booking-service
       - doctor-service
       - admin-service
-    command: ["npm", "run", "dev"]
     networks:
       - app-network
+
 
   auth-service:
     build: ./auth-service
