@@ -1,7 +1,10 @@
-@import "tailwindcss";
-
 /* Admin Dashboard Professional CSS */
-
+.logout-button {
+    color: #dc2626;
+    font-weight: bold;
+    margin-top: 1rem;
+  }
+  
 body {
     font-family: 'Inter', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
     background-color: #f3f4f6;

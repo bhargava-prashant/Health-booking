@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import PatientDashboard from './pages/PatientDashboard';
 import DoctorDashboard from './pages/DoctorDashboard';
+import AdminDashboard from './pages/AdminDashboard';
 
 // Protected route component
 const ProtectedRoute = ({ children, requiredRole }) => {
@@ -90,6 +91,13 @@ const App = () => {
         <Route path="/doctor/dashboard" element={
           <ProtectedRoute requiredRole="doctor">
             <DoctorDashboard />
+          </ProtectedRoute>
+        } />
+        
+        {/* Doctor Dashboard Route - Fixed the role requirement */}
+        <Route path="/admin/dashboard" element={
+          <ProtectedRoute requiredRole="admin">
+            <AdminDashboard />
           </ProtectedRoute>
         } />
         
