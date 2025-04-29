@@ -1,44 +1,25 @@
 pipeline {
     agent any
 
-    environment {
-        DOCKER_HUB_CREDENTIALS = 'dockerhub-creds-id' // replace with your Jenkins credentials ID for Docker Hub
-        GITHUB_CREDENTIALS = 'github-creds-id'         // replace with your Jenkins credentials ID for GitHub
-        DOCKERHUB_USERNAME = 'prashantbhargava365'      // your Docker Hub username
-    }
-
     stages {
-        stage('Clone Repo') {
-            steps {
-                git credentialsId: "${GITHUB_CREDENTIALS}", url: 'https://github.com/bhargava-prashant/Health-booking' 
-            }
-        }
-
-        stage('Build and Push Docker Images') {
+        stage('Run Updated Containers') {
             steps {
                 script {
-                    def services = [
-                        'doctor-service',
-                        'booking-service',
-                        'auth-service',
-                        'client',
-                        'admin-service'
-                    ]
+                    echo 'Running updated containers...'
+                    
+                    // Remove existing containers
+                    sh 'docker rm -f client || true'
+                    sh 'docker rm -f admin-service || true'
+                    sh 'docker rm -f doctor-service || true'
+                    sh 'docker rm -f booking-service || true'
+                    sh 'docker rm -f auth-service || true'
 
-                    for (service in services) {
-                        echo "Building and pushing ${service}"
-
-                        // Build the docker image
-                        sh "docker build -t ${DOCKERHUB_USERNAME}/${service}:latest ${service}"
-
-                        // Login and Push
-                        withCredentials([usernamePassword(credentialsId: "${DOCKER_HUB_CREDENTIALS}", usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                            sh """
-                                echo \$DOCKER_PASS | docker login -u \$DOCKER_USER --password-stdin
-                                docker push ${DOCKERHUB_USERNAME}/${service}:latest
-                            """
-                        }
-                    }
+                    // Run updated containers
+                    sh 'docker run -d --name client prashantbhargava365/client:latest'
+                    sh 'docker run -d --name admin-service prashantbhargava365/admin-service:latest'
+                    sh 'docker run -d --name doctor-service prashantbhargava365/doctor-service:latest'
+                    sh 'docker run -d --name booking-service prashantbhargava365/booking-service:latest'
+                    sh 'docker run -d --name auth-service prashantbhargava365/auth-service:latest'
                 }
             }
         }
