@@ -4,7 +4,7 @@ import LoginForm from '../components/LoginForm';
 const LoginPage = () => {
   return (
     <div style={styles.container}>
-      <h1 style={styles.heading}>Medical Appointment System</h1>
+      <h1 style={styles.heading}>Medical Appointment </h1>
       <div style={styles.formContainer}>
         <LoginForm />
       </div>
