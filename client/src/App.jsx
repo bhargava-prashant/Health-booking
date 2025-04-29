@@ -4,6 +4,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import PatientDashboard from './pages/PatientDashboard';
+import DoctorDashboard from './pages/DoctorDashboard';
 
 // Protected route component
 const ProtectedRoute = ({ children, requiredRole }) => {
@@ -82,6 +83,13 @@ const App = () => {
         <Route path="/patient/dashboard" element={
           <ProtectedRoute requiredRole="patient">
             <PatientDashboard />
+          </ProtectedRoute>
+        } />
+
+        {/* Doctor Dashboard Route - Fixed the role requirement */}
+        <Route path="/doctor/dashboard" element={
+          <ProtectedRoute requiredRole="doctor">
+            <DoctorDashboard />
           </ProtectedRoute>
         } />
         
