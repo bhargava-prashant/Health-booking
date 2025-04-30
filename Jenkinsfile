@@ -1,25 +1,55 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKERHUB_USERNAME = 'prashantbhargava365'
+    }
+
     stages {
+        stage('Checkout Code') {
+            steps {
+                git url: 'https://github.com/bhargava-prashant/Health-booking', branch: 'main', credentialsId: 'github-creds-id'
+            }
+        }
+
+        stage('Docker Login') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds-id', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    sh 'echo "$PASSWORD" | docker login -u "$USERNAME" --password-stdin'
+                }
+            }
+        }
+
+        stage('Build and Push Docker Images') {
+            steps {
+                script {
+                    def services = ['client', 'admin-service', 'doctor-service', 'booking-service', 'auth-service']
+                    
+                    for (svc in services) {
+                        echo "Building ${svc}..."
+                        sh "docker build -t ${DOCKERHUB_USERNAME}/${svc}:latest ${svc}"
+                        
+                        echo "Pushing ${svc} to Docker Hub..."
+                        sh "docker push ${DOCKERHUB_USERNAME}/${svc}:latest"
+                    }
+                }
+            }
+        }
+
         stage('Run Updated Containers') {
             steps {
                 script {
-                    echo 'Running updated containers...'
+                    echo 'Removing old containers...'
+                    def services = ['client', 'admin-service', 'doctor-service', 'booking-service', 'auth-service']
                     
-                    // Remove existing containers
-                    sh 'docker rm -f client || true'
-                    sh 'docker rm -f admin-service || true'
-                    sh 'docker rm -f doctor-service || true'
-                    sh 'docker rm -f booking-service || true'
-                    sh 'docker rm -f auth-service || true'
+                    for (svc in services) {
+                        sh "docker rm -f ${svc} || true"
+                    }
 
-                    // Run updated containers
-                    sh 'docker run -d --name client prashantbhargava365/client:latest'
-                    sh 'docker run -d --name admin-service prashantbhargava365/admin-service:latest'
-                    sh 'docker run -d --name doctor-service prashantbhargava365/doctor-service:latest'
-                    sh 'docker run -d --name booking-service prashantbhargava365/booking-service:latest'
-                    sh 'docker run -d --name auth-service prashantbhargava365/auth-service:latest'
+                    echo 'Starting new containers...'
+                    for (svc in services) {
+                        sh "docker run -d --name ${svc} ${DOCKERHUB_USERNAME}/${svc}:latest"
+                    }
                 }
             }
         }
