@@ -1,39 +1,42 @@
 # 🏥 Health Booking System
 
-A microservice-based **Health Booking System** built using **Node.js**, **PostgreSQL**, **Docker**, and **Jenkins CI/CD**. The system enables patients to book appointments with doctors, and administrators to manage users and services.
+A microservice-based **Health Booking System** built using **Node.js**, **PostgreSQL**, **Docker**, and **Jenkins CI/CD**. The system enables patients to book appointments with doctors, while administrators manage services and users effectively.
 
 ---
 
-## 📂 Repository
+## 📁 Repository
 
-**GitHub:** [Health Booking System](https://github.com/bhargava-prashant/Health-booking)
-
----
-
-## 👤 Developer Info
-
-- **Name:** Prashant Bhargava  
-- **Reg No.:** 12215090  
-- **Course Code:** INT332  
-- **Roll No.:** 6  
+🔗 [GitHub – Health Booking System](https://github.com/bhargava-prashant/Health-booking)
 
 ---
 
-## ⚙️ Microservices Architecture
+## 👤 Developer Information
 
-This system includes 4 microservices:
+- 👨‍💻 **Name:** Prashant Bhargava  
+- 🆔 **Reg No.:** 12215090  
+- 📚 **Course Code:** INT332  
+- 🌀 **Roll No.:** 6  
 
-- **Auth Service:** Handles user authentication and role-based access.
-- **Booking Service:** Manages patient bookings and appointments.
-- **Doctor Service:** Manages doctor profiles and availability.
-- **Admin Service:** Admin-level access and management of system-wide settings.
+---
+
+## 🧱 Microservices Architecture
+
+This system is modularized into 4 microservices:
+
+- 🔐 **Auth Service:** Handles user login, registration, and role-based access.  
+- 📅 **Booking Service:** Manages patient appointments with doctors.  
+- 🩺 **Doctor Service:** Manages doctor details, specialization, and availability.  
+- 🛠️ **Admin Service:** Allows admin users to manage platform-wide configurations.
+
+Each microservice is independently containerized and connected via Docker Compose.
 
 ---
 
 ## 🐳 Docker Setup
 
-Each microservice contains its own `Dockerfile`.  
-Example (Auth Service):
+Every service includes its own `Dockerfile`.  
+Below is an example for the **Auth Service**:
+
 ```Dockerfile
 FROM node:16
 WORKDIR /app
@@ -44,13 +47,17 @@ EXPOSE 3000
 CMD ["node", "app.js"]
 ````
 
-> Services run on ports 3000 (Auth), 4000 (Booking), 5000 (Doctor), and 6000 (Admin)
+> Services run on ports:
+> 🔹 3000 - Auth
+> 🔹 4000 - Booking
+> 🔹 5000 - Doctor
+> 🔹 6000 - Admin
 
 ---
 
-## 📦 `docker-compose.yml`
+## 📦 Docker Compose Configuration
 
-All services and a **PostgreSQL** database are orchestrated using Docker Compose.
+The `docker-compose.yml` orchestrates all services along with a PostgreSQL database.
 
 ```yaml
 version: '3.7'
@@ -113,7 +120,7 @@ volumes:
 
 ---
 
-## 🛠 PostgreSQL Schema
+## 🗄️ PostgreSQL Schema
 
 ```sql
 CREATE TABLE users (
@@ -158,35 +165,37 @@ CREATE TABLE admins (
 
 ---
 
-## 🐳 Docker Hub Deployment
+## 📤 Pushing Images to Docker Hub
 
-1. **Login to Docker Hub**
+### 1. Login to Docker Hub
 
-   ```bash
-   docker login
-   ```
+```bash
+docker login
+```
 
-2. **Tag Docker Images**
+### 2. Tag the Images
 
-   ```bash
-   docker tag auth-service prashantbhargava365/auth-service
-   docker tag booking-service prashantbhargava365/booking-service
-   docker tag doctor-service prashantbhargava365/doctor-service
-   docker tag admin-service prashantbhargava365/admin-service
-   ```
+```bash
+docker tag auth-service prashantbhargava365/auth-service
+docker tag booking-service prashantbhargava365/booking-service
+docker tag doctor-service prashantbhargava365/doctor-service
+docker tag admin-service prashantbhargava365/admin-service
+```
 
-3. **Push to Docker Hub**
+### 3. Push the Images
 
-   ```bash
-   docker push prashantbhargava365/auth-service
-   docker push prashantbhargava365/booking-service
-   docker push prashantbhargava365/doctor-service
-   docker push prashantbhargava365/admin-service
-   ```
+```bash
+docker push prashantbhargava365/auth-service
+docker push prashantbhargava365/booking-service
+docker push prashantbhargava365/doctor-service
+docker push prashantbhargava365/admin-service
+```
 
 ---
 
 ## 🔄 Jenkins CI/CD Pipeline
+
+Below is the Jenkins pipeline used for build, push, and deployment:
 
 ```groovy
 pipeline {
@@ -233,24 +242,35 @@ pipeline {
 
 ---
 
-## 🔧 Jenkins Manual Trigger
+## 🛠 Jenkins Manual Trigger
+
+Run this command to trigger your pipeline manually:
 
 ```bash
 java -jar jenkins-cli.jar build HealthBookingJob
 ```
 
+---
+
 ## ✅ Summary
 
-This project demonstrates a robust and modular healthcare booking platform using **microservices**, **Docker containers**, **PostgreSQL**, and **automated CI/CD with Jenkins**.
+This project demonstrates a scalable and robust microservice-based healthcare appointment platform.
+Powered by:
+
+* 💻 Node.js (for backend services)
+* 🐘 PostgreSQL (relational data storage)
+* 🐳 Docker (containerization)
+* 🔄 Jenkins (automated CI/CD pipeline)
 
 ---
 
 ## 📬 Contact
 
-For any queries, reach out to:
+For any queries, feel free to reach out:
 
 **Prashant Bhargava**
 📧 [prashantbhargava365@gmail.com](mailto:prashantbhargava365@gmail.com)
 
 ---
+
 
