@@ -10,15 +10,6 @@ A microservice-based **Health Booking System** built using **Node.js**, **Postgr
 
 ---
 
-## 👤 Developer Information
-
-- 👨‍💻 **Name:** Prashant Bhargava  
-- 🆔 **Reg No.:** 12215090  
-- 📚 **Course Code:** INT332  
-- 🌀 **Roll No.:** 6  
-
----
-
 ## 🧱 Microservices Architecture
 
 This system is modularized into 4 microservices:
@@ -270,6 +261,7 @@ For any queries, feel free to reach out:
 
 **Prashant Bhargava**
 📧 [prashantbhargava365@gmail.com](mailto:prashantbhargava365@gmail.com)
+🔗 Visit my portfolio: [prashant-bhargava-dev.onrender.com](https://prashant-bhargava-dev.onrender.com)
 
 ---
 
