@@ -1,225 +1,101 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Health Booking System - Detailed Setup</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet"> <!-- Link to Google Fonts for Fira Code -->
-    <style>
+Here's a professional, structured `README.md` file for your **Health Booking System** project based on the HTML content you provided:
 
-    body {
-        font-family: 'Arial', sans-serif;
-        background-color: #f4f4f4; /* Light background for the body */
-        color: #333; /* Dark text color for the rest of the content */
-        padding: 20px;
-    }
-    pre {
-        background-color: #1e1e1e; /* Black background for code blocks */
-        color: white; /* White text color for code */
-        padding: 15px;
-        border-radius: 5px;
-        overflow-x: auto;
-        font-size: 14px;
-        border: 2px solid #66cc66; /* Green border for a more graphical look */
-        font-family: 'Fira Code', monospace; /* Apply Fira Code font */
-        line-height: 1.5;
-    }
-    h2 {
-        color: #66cc66;
-    }
-    h1, h2 {
-        color: #000; /* Black font for headings */
-    }
-    .header-section {
-        text-align: center;
-        margin-bottom: 20px;
-    }
-    .details-section {
-        margin-top: 20px;
-    }
-    .details-section p {
-        font-size: 16px;
-    }
-    .image-section {
-        margin-top: 20px;
-        width: 80%; /* Set the width of the image section to 80% of the page */
-        margin: 0 auto; /* Center align the image section */
-    }
-    .image-section img {
-        width: 100%; /* Make images fill the section width */
-        height: 60vh; /* Set height to 60% of the viewport height */
-        object-fit: contain; /* Maintain aspect ratio while fitting the container */
-        border: 2px solid #333;
-        border-radius: 10px;
-        margin-bottom: 20px; /* Add margin for spacing between images */
-    }
-</style>
+---
 
-    
-</head>
-<body>
-    <!-- Project Header Section -->
-    <div class="header-section">
-        <h1>Health Booking System - Detailed Setup</h1>
-        <p><strong>GitHub Link:</strong> <a href="https://github.com/bhargava-prashant/Health-booking" target="_blank">https://github.com/bhargava-prashant/Health-booking</a></p>
-    </div>
+````markdown
+# 🏥 Health Booking System
 
-    <!-- Details Section -->
-    <div class="details-section">
-        <p><strong>Project Name:</strong> Health Booking System</p>
-        <p><strong>Name:</strong> Prashant Bhargava</p>
-        <p><strong>Reg No.:</strong> 12215090</p>
-        <p><strong>Course Code:</strong> INT332</p>
-        <p><strong>Roll No.:</strong> 6</p>
-    </div>
+A microservice-based **Health Booking System** built using **Node.js**, **PostgreSQL**, **Docker**, and **Jenkins CI/CD**. The system enables patients to book appointments with doctors, and administrators to manage users and services.
 
-    <h2>1. Dockerfile for Each Service</h2>
+---
 
-    <p>Each microservice (Auth, Booking, Doctor, Admin) has its own Dockerfile for containerization.</p>
+## 📂 Repository
 
-    <h3>Auth Service Dockerfile</h3>
-    <pre>
-# Use Node.js official image
+**GitHub:** [Health Booking System](https://github.com/bhargava-prashant/Health-booking)
+
+---
+
+## 👤 Developer Info
+
+- **Name:** Prashant Bhargava  
+- **Reg No.:** 12215090  
+- **Course Code:** INT332  
+- **Roll No.:** 6  
+
+---
+
+## ⚙️ Microservices Architecture
+
+This system includes 4 microservices:
+
+- **Auth Service:** Handles user authentication and role-based access.
+- **Booking Service:** Manages patient bookings and appointments.
+- **Doctor Service:** Manages doctor profiles and availability.
+- **Admin Service:** Admin-level access and management of system-wide settings.
+
+---
+
+## 🐳 Docker Setup
+
+Each microservice contains its own `Dockerfile`.  
+Example (Auth Service):
+```Dockerfile
 FROM node:16
-
-# Set the working directory in the container
 WORKDIR /app
-
-# Copy package.json and package-lock.json (for npm)
-COPY package*.json ./ 
-
-# Install dependencies
+COPY package*.json ./
 RUN npm install
-
-# Copy the rest of the application code
-COPY . . 
-
-# Expose the app's port
-EXPOSE 3000 
-
-# Command to run the app
+COPY . .
+EXPOSE 3000
 CMD ["node", "app.js"]
-    </pre>
+````
 
-    <h3>Booking Service Dockerfile</h3>
-    <pre>
-# Use Node.js official image
-FROM node:16
+> Services run on ports 3000 (Auth), 4000 (Booking), 5000 (Doctor), and 6000 (Admin)
 
-# Set the working directory in the container
-WORKDIR /app
+---
 
-# Copy package.json and package-lock.json (for npm)
-COPY package*.json ./ 
+## 📦 `docker-compose.yml`
 
-# Install dependencies
-RUN npm install
+All services and a **PostgreSQL** database are orchestrated using Docker Compose.
 
-# Copy the rest of the application code
-COPY . . 
-
-# Expose the app's port
-EXPOSE 4000 
-
-# Command to run the app
-CMD ["node", "app.js"]
-    </pre>
-
-    <h3>Doctor Service Dockerfile</h3>
-    <pre>
-# Use Node.js official image
-FROM node:16
-
-# Set the working directory in the container
-WORKDIR /app
-
-# Copy package.json and package-lock.json (for npm)
-COPY package*.json ./ 
-
-# Install dependencies
-RUN npm install
-
-# Copy the rest of the application code
-COPY . . 
-
-# Expose the app's port
-EXPOSE 5000 
-
-# Command to run the app
-CMD ["node", "app.js"]
-    </pre>
-
-    <h3>Admin Service Dockerfile</h3>
-    <pre>
-# Use Node.js official image
-FROM node:16
-
-# Set the working directory in the container
-WORKDIR /app
-
-# Copy package.json and package-lock.json (for npm)
-COPY package*.json ./ 
-
-# Install dependencies
-RUN npm install
-
-# Copy the rest of the application code
-COPY . . 
-
-# Expose the app's port
-EXPOSE 6000 
-
-# Command to run the app
-CMD ["node", "app.js"]
-    </pre>
-
-    <h2>2. `docker-compose.yml` for Managing Containers</h2>
-
-    <p>The `docker-compose.yml` file orchestrates all the services and their dependencies, including PostgreSQL.</p>
-
-    <pre>
+```yaml
 version: '3.7'
 
 services:
   auth-service:
-    build:
-      context: ./auth-service
+    build: ./auth-service
     ports:
       - "3000:3000"
-    networks:
-      - health-net
     depends_on:
       - db
+    networks:
+      - health-net
 
   booking-service:
-    build:
-      context: ./booking-service
+    build: ./booking-service
     ports:
       - "4000:4000"
-    networks:
-      - health-net
     depends_on:
       - db
+    networks:
+      - health-net
 
   doctor-service:
-    build:
-      context: ./doctor-service
+    build: ./doctor-service
     ports:
       - "5000:5000"
-    networks:
-      - health-net
     depends_on:
       - db
+    networks:
+      - health-net
 
   admin-service:
-    build:
-      context: ./admin-service
+    build: ./admin-service
     ports:
       - "6000:6000"
-    networks:
-      - health-net
     depends_on:
       - db
+    networks:
+      - health-net
 
   db:
     image: postgres:13
@@ -238,22 +114,21 @@ networks:
 
 volumes:
   pg_data:
-    driver: local
-    </pre>
+```
 
-    <h2>3. PostgreSQL Commands for Creating Tables</h2>
+---
 
-    <pre>
--- Create Users Table
+## 🛠 PostgreSQL Schema
+
+```sql
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    username VARCHAR(100) NOT NULL,
-    password VARCHAR(100) NOT NULL,
+    username VARCHAR(100),
+    password VARCHAR(100),
     email VARCHAR(100),
-    role VARCHAR(50) NOT NULL CHECK (role IN ('patient', 'doctor', 'admin'))
+    role VARCHAR(50) CHECK (role IN ('patient', 'doctor', 'admin'))
 );
 
--- Create Patients Table
 CREATE TABLE patients (
     id SERIAL PRIMARY KEY,
     user_id INT REFERENCES users(id),
@@ -263,7 +138,6 @@ CREATE TABLE patients (
     contact_number VARCHAR(15)
 );
 
--- Create Doctors Table
 CREATE TABLE doctors (
     id SERIAL PRIMARY KEY,
     user_id INT REFERENCES users(id),
@@ -272,7 +146,6 @@ CREATE TABLE doctors (
     contact_number VARCHAR(15)
 );
 
--- Create Bookings Table
 CREATE TABLE bookings (
     id SERIAL PRIMARY KEY,
     patient_id INT REFERENCES patients(id),
@@ -281,37 +154,46 @@ CREATE TABLE bookings (
     status VARCHAR(50) CHECK (status IN ('booked', 'completed', 'cancelled'))
 );
 
--- Create Admin Table
 CREATE TABLE admins (
     id SERIAL PRIMARY KEY,
     user_id INT REFERENCES users(id),
     permissions VARCHAR(255)
 );
-    </pre>
+```
 
-    <h2>4. Docker Hub: Pushing Images</h2>
+---
 
-    <ol>
-        <li><strong>Login to Docker Hub:</strong>
-            <pre>docker login</pre>
-        </li>
-        <li><strong>Tag your Docker image:</strong>
-            <pre>docker tag auth-service prashantbhargava365/auth-service</pre>
-            <pre>docker tag booking-service prashantbhargava365/booking-service</pre>
-            <pre>docker tag doctor-service prashantbhargava365/doctor-service</pre>
-            <pre>docker tag admin-service prashantbhargava365/admin-service</pre>
-        </li>
-        <li><strong>Push the Docker images:</strong>
-            <pre>docker push prashantbhargava365/auth-service</pre>
-            <pre>docker push prashantbhargava365/booking-service</pre>
-            <pre>docker push prashantbhargava365/doctor-service</pre>
-            <pre>docker push prashantbhargava365/admin-service</pre>
-        </li>
-    </ol>
+## 🐳 Docker Hub Deployment
 
-    <h2>5. Jenkins CI/CD Pipeline Setup</h2>
+1. **Login to Docker Hub**
 
-    <pre>
+   ```bash
+   docker login
+   ```
+
+2. **Tag Docker Images**
+
+   ```bash
+   docker tag auth-service prashantbhargava365/auth-service
+   docker tag booking-service prashantbhargava365/booking-service
+   docker tag doctor-service prashantbhargava365/doctor-service
+   docker tag admin-service prashantbhargava365/admin-service
+   ```
+
+3. **Push to Docker Hub**
+
+   ```bash
+   docker push prashantbhargava365/auth-service
+   docker push prashantbhargava365/booking-service
+   docker push prashantbhargava365/doctor-service
+   docker push prashantbhargava365/admin-service
+   ```
+
+---
+
+## 🔄 Jenkins CI/CD Pipeline
+
+```groovy
 pipeline {
     agent any
     environment {
@@ -325,27 +207,21 @@ pipeline {
         }
         stage('Build Docker Images') {
             steps {
-                script {
-                    sh 'docker-compose build'
-                }
+                sh 'docker-compose build'
             }
         }
         stage('Push to Docker Hub') {
             steps {
-                script {
-                    sh 'docker push ${DOCKER_HUB_REPO}/auth-service'
-                    sh 'docker push ${DOCKER_HUB_REPO}/booking-service'
-                    sh 'docker push ${DOCKER_HUB_REPO}/doctor-service'
-                    sh 'docker push ${DOCKER_HUB_REPO}/admin-service'
-                }
+                sh 'docker push ${DOCKER_HUB_REPO}/auth-service'
+                sh 'docker push ${DOCKER_HUB_REPO}/booking-service'
+                sh 'docker push ${DOCKER_HUB_REPO}/doctor-service'
+                sh 'docker push ${DOCKER_HUB_REPO}/admin-service'
             }
         }
         stage('Deploy to Production') {
             steps {
-                script {
-                    sh 'docker-compose down'
-                    sh 'docker-compose up -d'
-                }
+                sh 'docker-compose down'
+                sh 'docker-compose up -d'
             }
         }
     }
@@ -358,22 +234,32 @@ pipeline {
         }
     }
 }
-    </pre>
+```
 
-    <h2>6. Jenkins Commands</h2>
+---
 
-    <pre>
-# Trigger the pipeline manually:
+## 🔧 Jenkins Manual Trigger
+
+```bash
 java -jar jenkins-cli.jar build HealthBookingJob
-    </pre>
+```
 
-    <!-- Image Section -->
-    <div class="image-section">
-        <img src="docker.png" alt="Docker Containers">
-        <img src="docker_hub.png" alt="Docker Hub">
-        <img src="jenkins.png" alt="Jenkins CI/CD Pipeline">
-    </div>
+## ✅ Summary
 
-    <p>Ensured Jenkins is properly configured with Docker and your GitHub repository for seamless automation.</p>
-</body>
-</html>
+This project demonstrates a robust and modular healthcare booking platform using **microservices**, **Docker containers**, **PostgreSQL**, and **automated CI/CD with Jenkins**.
+
+---
+
+## 📬 Contact
+
+For any queries, reach out to:
+
+**Prashant Bhargava**
+📧 [prashantbhargava365@gmail.com](mailto:prashantbhargava365@gmail.com)
+
+---
+
+```
+
+Let me know if you'd like this version exported as a `.md` file or customized further (e.g., with badges, GitHub actions, or installation steps).
+```
