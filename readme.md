@@ -233,14 +233,14 @@ pipeline {
 
 ---
 
-## 🛠 Jenkins Manual Trigger
 
-Run this command to trigger your pipeline manually:
+## 🔄 Jenkins Pipeline Trigger (Docker-based Jenkins)
 
-```bash
-java -jar jenkins-cli.jar build HealthBookingJob
-```
+This CI/CD pipeline is managed via a Dockerized Jenkins setup.
 
+You can trigger the pipeline using either:
+- **Manual trigger** from the Jenkins dashboard, or
+- **GitHub webhook** for automatic builds on push.
 ---
 
 ## ✅ Summary
